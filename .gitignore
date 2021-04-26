@@ -1,3 +1,2 @@
-/react_parks/node_modules
-/server_parks/node_modules
+node_modules
 .DS_Store
