@@ -17,3 +17,24 @@ Heroku
 
 ## User Flow
 
+<img src=https://github.com/yjwangit/NationalParks/blob/main/diagrams/userflow.png></img>
+
+## Wireframes
+
+<img src=https://github.com/yjwangit/NationalParks/blob/main/diagrams/wireframe1.png></img>
+
+<img src=https://github.com/yjwangit/NationalParks/blob/main/diagrams/wireframe2.png></img>
+
+<img src=https://github.com/yjwangit/NationalParks/blob/main/diagrams/wireframe3.png></img>
+
+<img src=https://github.com/yjwangit/NationalParks/blob/main/diagrams/userpage.png></img>
+
+## Database Schema
+
+<img src=https://github.com/yjwangit/NationalParks/blob/main/diagrams/dbschema.png></img>
+
+
+
+
+
+
