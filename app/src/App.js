@@ -2,54 +2,15 @@ import * as React from "react";
 
 import * as apiClient from "./apiClient";
 
+import Search from "./components/Search";
+
 const App = () => {
-  const [tasks, setTasks] = React.useState([]);
 
-  const loadTasks = async () => setTasks(await apiClient.getTasks());
+  const apiurl = "https://developer.nps.gov/api/v1/parks?api_key=DfbkVVqO5eM8F7cPXqbJVfOmFEHtfmBXsuktlP48";
 
-  React.useEffect(() => {
-    loadTasks();
-  }, []);
+}
 
-  return (
-    <main className="App">
-      <TaskList tasks={tasks} />
-      <AddTask loadTasks={loadTasks} />
-    </main>
-  );
-};
 
-const TaskList = ({ tasks }) => (
-  <ul>
-    {tasks.map(({ id, name }) => (
-      <li key={id}>{name}</li>
-    ))}
-  </ul>
-);
 
-const AddTask = ({ loadTasks }) => {
-  const [task, setTask] = React.useState("");
-
-  const canAdd = task !== "";
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    if (canAdd) {
-      await apiClient.addTask(task);
-      loadTasks();
-      setTask("");
-    }
-  };
-
-  return (
-    <form onSubmit={onSubmit}>
-      <label>
-        New task:{" "}
-        <input onChange={(e) => setTask(e.currentTarget.value)} value={task} />
-      </label>
-      <button disabled={!canAdd}>Add</button>
-    </form>
-  );
-};
 
 export default App;
