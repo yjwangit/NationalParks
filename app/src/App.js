@@ -1,40 +1,54 @@
 import React, { useState } from "react";
+
+import axios from "axios";
+
 //import * as apiClient from "./apiClient";
+import Results from "./components/Results";
 import Search from "./components/Search";
 
-
 function App() {
-
   const [state, setState] = useState({
     searchValue: "",
     results: [],
-    selected: {}
+    selected: {},
   });
-  
-  const apiUrl = "https://developer.nps.gov/api/v1/parks?api_key=DfbkVVqO5eM8F7cPXqbJVfOmFEHtfmBXsuktlP48";
+
+  const apiUrl = `http://localhost:4000/api/tasks/parks?q=${state.searchValue}`;
+
+  const searchrequest = (e) => {
+    if (e.key === "Enter") {
+      axios(apiUrl).then((data) => {
+        console.log(data);
+        window.data = data;
+        setState((prevState) => {
+          return {
+            ...prevState,
+            results: data.data.data,
+          };
+        });
+      });
+    }
+  };
 
   const handleInput = (e) => {
     let searchValue = e.target.value;
-  
-    setState(prevState => {
-      return { ...prevState, searchValue: searchValue }
-    });
 
-     
-     
-     
-    return (
-      <div className="App">
-        <header>
-          <h1>National Park Finder</h1>
-        </header>
-        <main>
-          <Search handleInput={handleInput} />
-        </main>
-      </div>
-    );
-  }
+    setState((prevState) => {
+      return { ...prevState, searchValue: searchValue };
+    });
+  };
+
+  return (
+    <div className="App">
+      <header>
+        <h1>National Park Finder</h1>
+      </header>
+      <main>
+        <Search handleInput={handleInput} searchrequest={searchrequest} />
+        <Results results={state.results} />
+      </main>
+    </div>
+  );
 }
 
-
-export default App
+export default App;
