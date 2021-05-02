@@ -5,29 +5,31 @@ import axios from "axios";
 //import * as apiClient from "./apiClient";
 import Results from "./components/Results";
 import Search from "./components/Search";
-
+import Selection from "./components/Selection";
 function App() {
   const [state, setState] = useState({
     searchValue: "",
     results: [],
-    selected: {},
   });
 
-  const apiUrl = `http://localhost:4000/api/tasks/parks?q=${state.searchValue}`;
+  const apiUrl = `http://localhost:4000/api/tasks/parks`;
+
+  const queryList = (url) => {
+    axios.get(url).then((data) => {
+      console.log(data);
+      window.data = data;
+      setState((prevState) => {
+        return {
+          ...prevState,
+          results: data.data.data,
+        };
+      });
+    });
+  };
 
   const searchrequest = (e) => {
-    if (e.key === "Enter") {
-      axios(apiUrl).then((data) => {
-        console.log(data);
-        window.data = data;
-        setState((prevState) => {
-          return {
-            ...prevState,
-            results: data.data.data,
-          };
-        });
-      });
-    }
+    const url = `${apiUrl}?q=${state.searchValue}`;
+    queryList(url);
   };
 
   const handleInput = (e) => {
@@ -38,13 +40,21 @@ function App() {
     });
   };
 
+  const handleAreaSearch = (statecode) => {
+    console.log(statecode, "statecode");
+    const url = `${apiUrl}?statecode=${statecode}`;
+    queryList(url);
+  };
+
   return (
     <div className="App">
       <header>
         <h1>National Park Finder</h1>
       </header>
       <main>
-        <Search handleInput={handleInput} searchrequest={searchrequest} />
+        <Selection handleAreaSearch={handleAreaSearch} />
+        <Search handleInput={handleInput} handleClick={searchrequest} />
+
         <Results results={state.results} />
       </main>
     </div>

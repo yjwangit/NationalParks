@@ -20,7 +20,6 @@ header h1 {
 }
 
 main {
-  width: 25%;
   max-width: 960px;
   margin: 0 auto;
 }
@@ -33,8 +32,7 @@ section {
 }
 
 .searchbox {
-  display: block;
-  width: 100%;
+  width: 90%;
   padding: 15px;
 
   border: none;
@@ -45,4 +43,16 @@ section {
   border-radius: 8px;
 
   font-size: medium;
+}
+
+.imgStyle {
+  width: 200px;
+  height: 200px;
+  border-radius: 15px;
+  overflow: hidden;
+  object-fit: cover;
+  margin: 0 auto;
+}
+.results {
+  display: flex;
 }
