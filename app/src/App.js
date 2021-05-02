@@ -16,11 +16,15 @@ function App() {
 
   const queryList = (url) => {
     axios.get(url).then((data) => {
+      //date is an object that is returned from express response (data是后台返回给前端的对象(express中response里返回的))
       console.log(data);
       window.data = data;
+      //reasign value
       setState((prevState) => {
         return {
           ...prevState,
+          //searchValue: state.searchValue,
+          //results:state.results,
           results: data.data.data,
         };
       });
@@ -36,7 +40,10 @@ function App() {
     let searchValue = e.target.value;
 
     setState((prevState) => {
-      return { ...prevState, searchValue: searchValue };
+      return {
+        ...prevState,
+        searchValue: searchValue,
+      };
     });
   };
 

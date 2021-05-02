@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 
+//handleAreaSearch是在props中传递过来的函数，此函数在app.js中定义,需要传入statecode参数在app.js中进行接口的请求
 function Selection({ handleAreaSearch }) {
   const [selectedVal, setSelectedVal] = useState("");
-  const [area, setArea] = useState([
+  const [area] = useState([
     {
       name: "Alabama",
       abbreviation: "AL",
@@ -212,6 +213,7 @@ function Selection({ handleAreaSearch }) {
       abbreviation: "WY",
     },
   ]);
+  //select改变事件,在event中取到当前选择的option的值
   const selectChange = (e) => {
     setSelectedVal(e.target.value);
   };
