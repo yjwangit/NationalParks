@@ -157,10 +157,6 @@ function Selection({ handleAreaSearch }) {
       abbreviation: "OR",
     },
     {
-      name: "Palau",
-      abbreviation: "PW",
-    },
-    {
       name: "Pennsylvania",
       abbreviation: "PA",
     },

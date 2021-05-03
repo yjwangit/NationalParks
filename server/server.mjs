@@ -20,13 +20,16 @@ tasks.get("/", async (request, response) => {
 });
 
 tasks.get("/parks", async (request, response) => {
-  console.log(request);
+  // console.log(request);
+
   const { query } = request;
   console.log("query: ", query);
-  const result = await axios.get(
-    `https://developer.nps.gov/api/v1/parks?api_key=${process.env.NPS_API_KEY}`,
-    { params: query },
-  );
+
+  const url = `https://developer.nps.gov/api/v1/parks?api_key=${process.env.NPS_API_KEY}`;
+  console.log("XXX tasks:/partks: url:", url);
+
+  const result = await axios.get(url, { params: query });
+  console.log("XXX tasks:/partks: result:", result);
 
   response.json(result.data);
 });
