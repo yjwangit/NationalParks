@@ -1,54 +1,70 @@
-import * as React from "react";
+import React, { useState } from "react";
 
-import * as apiClient from "./apiClient";
+import { Route, useHistory } from "react-router-dom";
 
+//import * as apiClient from "./apiClient";
+import Header from "./components/Header";
+import Parkdetails from "./components/Parkdetails";
+import Results from "./components/Results";
+import Search from "./components/Search";
+import Selection from "./components/Selection";
 const App = () => {
-  const [tasks, setTasks] = React.useState([]);
+  let history = useHistory();
+  const requestUrl = `http://localhost:4000/api/tasks/parks`;
+  const [state, setState] = useState({
+    searchValue: "",
+    results: [],
+  });
+  const [apiUrl, setApiUrl] = useState("");
 
-  const loadTasks = async () => setTasks(await apiClient.getTasks());
+  const searchrequest = (e) => {
+    setApiUrl(`${requestUrl}?q=${state.searchValue}&limit=10`);
+    history.push({
+      pathname: `/searchResults`,
+    });
+  };
 
-  React.useEffect(() => {
-    loadTasks();
-  }, []);
+  const handleInput = (e) => {
+    let searchValue = e.target.value;
 
-  return (
-    <main className="App">
-      <TaskList tasks={tasks} />
-      <AddTask loadTasks={loadTasks} />
-    </main>
-  );
-};
+    setState((prevState) => {
+      return {
+        ...prevState,
+        searchValue: searchValue,
+      };
+    });
+  };
 
-const TaskList = ({ tasks }) => (
-  <ul>
-    {tasks.map(({ id, name }) => (
-      <li key={id}>{name}</li>
-    ))}
-  </ul>
-);
-
-const AddTask = ({ loadTasks }) => {
-  const [task, setTask] = React.useState("");
-
-  const canAdd = task !== "";
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    if (canAdd) {
-      await apiClient.addTask(task);
-      loadTasks();
-      setTask("");
-    }
+  const handleAreaSearch = (statecode) => {
+    //通过statecode搜索时设置请求url
+    setApiUrl(`${requestUrl}?statecode=${statecode}&limit=10`);
+    history.push({
+      pathname: `/searchResults`,
+    });
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <label>
-        New task:{" "}
-        <input onChange={(e) => setTask(e.currentTarget.value)} value={task} />
-      </label>
-      <button disabled={!canAdd}>Add</button>
-    </form>
+    <div className="App">
+      <header>
+        <Header />
+      </header>
+      <main>
+        <Route exact path="/">
+          <Selection handleAreaSearch={handleAreaSearch} />
+          <Search
+            to="/searchResults"
+            handleInput={handleInput}
+            handleClick={searchrequest}
+          />
+        </Route>
+        <Route exact path="/searchResults">
+          <Results apiUrl={apiUrl} />
+        </Route>
+        <Route exact path="/parkDetails/:id">
+          <Parkdetails requestUrl={requestUrl} />
+        </Route>
+      </main>
+    </div>
   );
 };
 
