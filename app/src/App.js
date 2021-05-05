@@ -4,10 +4,12 @@ import { Route, useHistory } from "react-router-dom";
 
 //import * as apiClient from "./apiClient";
 import Header from "./components/Header";
+import Login from "./components/Login";
 import Parkdetails from "./components/Parkdetails";
 import Results from "./components/Results";
 import Search from "./components/Search";
 import Selection from "./components/Selection";
+import Signup from "./components/Signup";
 const App = () => {
   let history = useHistory();
   const requestUrl = `http://localhost:4000/api/tasks/parks`;
@@ -62,6 +64,12 @@ const App = () => {
         </Route>
         <Route exact path="/parkDetails/:id">
           <Parkdetails requestUrl={requestUrl} />
+        </Route>
+        <Route exact path="/login">
+          <Login />
+        </Route>
+        <Route exact path="/signup">
+          <Signup />
         </Route>
       </main>
     </div>
