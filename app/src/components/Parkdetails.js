@@ -16,8 +16,9 @@ function Popup({ requestUrl }) {
   const queryDetails = (detailId) => {
     const apiUrl = `${requestUrl}?id=${detailId}`;
     axios.get(apiUrl).then((data) => {
-      setDetails(data.data.data[0]);
-      setCurrentImg(data.data.data[0].images[0].url);
+      const res = data.data.data[0];
+      setDetails(res);
+      setCurrentImg(res.images.length > 0 ? res.images[0].url : "");
       setIsLoad(true);
     });
   };
