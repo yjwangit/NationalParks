@@ -1,10 +1,16 @@
+import axios from "axios";
+import cors from "cors";
+import dotenv from "dotenv";
 import express from "express";
 import mime from "mime-types";
 
 import * as db from "./db.mjs";
 
+dotenv.config();
+
 const app = express();
 const port = process.env.PORT || 4000;
+app.use(cors());
 
 const tasks = express.Router();
 
@@ -12,6 +18,23 @@ tasks.get("/", async (request, response) => {
   const tasks = await db.getTasks();
   response.json(tasks);
 });
+
+tasks.get("/parks", async (request, response) => {
+  // console.log(request);
+
+  const { query } = request;
+  console.log("query: ", query);
+
+  const url = `https://developer.nps.gov/api/v1/parks?api_key=${process.env.NPS_API_KEY}`;
+  console.log("XXX tasks:/partks: url:", url);
+
+  const result = await axios.get(url, { params: query });
+  console.log("XXX tasks:/partks: result:", result);
+
+  response.json(result.data);
+});
+
+//developer.nps.gov/api/v1/parks?parkCode=&parkCode=&stateCode=&sort=&api_key=DfbkVVqO5eM8F7cPXqbJVfOmFEHtfmBXsuktlP48
 
 tasks.use(express.json());
 tasks.post("/", async (request, response) => {

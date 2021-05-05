@@ -1,55 +1,71 @@
-import * as React from "react";
+import React, { useState } from "react";
 
-import * as apiClient from "./apiClient";
+import axios from "axios";
 
-const App = () => {
-  const [tasks, setTasks] = React.useState([]);
+//import * as apiClient from "./apiClient";
+import Results from "./components/Results";
+import Search from "./components/Search";
+import Selection from "./components/Selection";
+function App() {
+  const [state, setState] = useState({
+    searchValue: "",
+    results: [],
+  });
 
-  const loadTasks = async () => setTasks(await apiClient.getTasks());
+  const apiUrl = `http://localhost:4000/api/tasks/parks`;
 
-  React.useEffect(() => {
-    loadTasks();
-  }, []);
+  const queryList = (url) => {
+    axios.get(url).then((data) => {
+      //date is an object that is returned from express response (data是后台返回给前端的对象(express中response里返回的))
+      console.log(data);
+      window.data = data;
+      //reasign value
+      setState((prevState) => {
+        return {
+          ...prevState,
+          //searchValue: state.searchValue,
+          //results:state.results,
+          results: data.data.data,
+        };
+      });
+    });
+  };
 
-  return (
-    <main className="App">
-      <TaskList tasks={tasks} />
-      <AddTask loadTasks={loadTasks} />
-    </main>
-  );
-};
+  const searchrequest = (e) => {
+    const url = `${apiUrl}?q=${state.searchValue}`;
+    queryList(url);
+  };
 
-const TaskList = ({ tasks }) => (
-  <ul>
-    {tasks.map(({ id, name }) => (
-      <li key={id}>{name}</li>
-    ))}
-  </ul>
-);
+  const handleInput = (e) => {
+    let searchValue = e.target.value;
 
-const AddTask = ({ loadTasks }) => {
-  const [task, setTask] = React.useState("");
+    setState((prevState) => {
+      return {
+        ...prevState,
+        searchValue: searchValue,
+      };
+    });
+  };
 
-  const canAdd = task !== "";
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    if (canAdd) {
-      await apiClient.addTask(task);
-      loadTasks();
-      setTask("");
-    }
+  const handleAreaSearch = (statecode) => {
+    console.log(statecode, "statecode");
+    const url = `${apiUrl}?statecode=${statecode}`;
+    queryList(url);
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <label>
-        New task:{" "}
-        <input onChange={(e) => setTask(e.currentTarget.value)} value={task} />
-      </label>
-      <button disabled={!canAdd}>Add</button>
-    </form>
+    <div className="App">
+      <header>
+        <h1>National Park Finder</h1>
+      </header>
+      <main>
+        <Selection handleAreaSearch={handleAreaSearch} />
+        <Search handleInput={handleInput} handleClick={searchrequest} />
+
+        <Results results={state.results} />
+      </main>
+    </div>
   );
-};
+}
 
 export default App;
