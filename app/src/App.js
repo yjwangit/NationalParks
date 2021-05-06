@@ -2,14 +2,16 @@ import React, { useState } from "react";
 
 import { Route, useHistory } from "react-router-dom";
 
-//import * as apiClient from "./apiClient";
 import Header from "./components/Header";
-import Login from "./components/Login";
+import LoginButton from "./components/Login";
+import LogoutButton from "./components/Logout";
 import Parkdetails from "./components/Parkdetails";
+import Profile from "./components/Profile";
 import Results from "./components/Results";
 import Search from "./components/Search";
 import Selection from "./components/Selection";
 import Signup from "./components/Signup";
+
 const App = () => {
   let history = useHistory();
   const requestUrl = `http://localhost:4000/api/tasks/parks`;
@@ -38,7 +40,7 @@ const App = () => {
   };
 
   const handleAreaSearch = (statecode) => {
-    //通过statecode搜索时设置请求url
+    //search by satecode
     setApiUrl(`${requestUrl}?statecode=${statecode}&limit=10`);
     history.push({
       pathname: `/searchResults`,
@@ -49,8 +51,11 @@ const App = () => {
     <div className="App">
       <header>
         <Header />
+        <LoginButton />
       </header>
       <main>
+        <Profile />
+        <LogoutButton />
         <Route exact path="/">
           <Selection handleAreaSearch={handleAreaSearch} />
           <Search
@@ -66,7 +71,7 @@ const App = () => {
           <Parkdetails requestUrl={requestUrl} />
         </Route>
         <Route exact path="/login">
-          <Login />
+          <LoginButton />
         </Route>
         <Route exact path="/signup">
           <Signup />

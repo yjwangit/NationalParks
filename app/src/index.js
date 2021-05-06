@@ -8,15 +8,16 @@ import "./index.css";
 import App from "./App";
 //import reportWebVitals from "./reportWebVitals";
 
-const domain = process.env.REACT_APP_AUTH0_DOMAIN;
-const clientID = process.env.REACT_APP_AUTH0_CLIENT_ID;
+// const domain = "dev-m1so.us.auth0.com";
+// const clientID = "BTb7r8IKJVu9BnKFll6N19bjBfa8heqw";
+// const auth0CallbackUrl = "http://localhost:3000/"; // window.location.origin
 
 ReactDOM.render(
   <React.StrictMode>
     <Auth0Provider
-      domain={domain}
-      clientID={clientID}
-      redirectUrl={window.location.origin}
+      domain="dev-m1so.us.auth0.com"
+      clientId="BTb7r8IKJVu9BnKFll6N19bjBfa8heqw"
+      redirectUri={window.location.origin}
     >
       <Router>
         <App />
