@@ -1,39 +1,30 @@
 import React, { useState } from "react";
 
-import axios from "axios";
+import { Route, useHistory } from "react-router-dom";
 
-//import * as apiClient from "./apiClient";
+import Header from "./components/Header";
+import LogoutButton from "./components/Logout";
+import Parkdetails from "./components/Parkdetails";
+import Profile from "./components/Profile";
 import Results from "./components/Results";
 import Search from "./components/Search";
 import Selection from "./components/Selection";
-function App() {
+import Signup from "./components/Signup";
+import coverImg from "./image/cover.jpg";
+const App = () => {
+  let history = useHistory();
+  const requestUrl = `http://localhost:4000/api/tasks/parks`;
   const [state, setState] = useState({
     searchValue: "",
     results: [],
   });
-
-  const apiUrl = `http://localhost:4000/api/tasks/parks`;
-
-  const queryList = (url) => {
-    axios.get(url).then((data) => {
-      //date is an object that is returned from express response (data是后台返回给前端的对象(express中response里返回的))
-      console.log(data);
-      window.data = data;
-      //reasign value
-      setState((prevState) => {
-        return {
-          ...prevState,
-          //searchValue: state.searchValue,
-          //results:state.results,
-          results: data.data.data,
-        };
-      });
-    });
-  };
+  const [apiUrl, setApiUrl] = useState("");
 
   const searchrequest = (e) => {
-    const url = `${apiUrl}?q=${state.searchValue}`;
-    queryList(url);
+    setApiUrl(`${requestUrl}?q=${state.searchValue}&limit=10`);
+    history.push({
+      pathname: `/searchResults`,
+    });
   };
 
   const handleInput = (e) => {
@@ -48,24 +39,46 @@ function App() {
   };
 
   const handleAreaSearch = (statecode) => {
-    console.log(statecode, "statecode");
-    const url = `${apiUrl}?statecode=${statecode}`;
-    queryList(url);
+    //search by satecode
+    setApiUrl(`${requestUrl}?statecode=${statecode}&limit=10`);
+    history.push({
+      pathname: `/searchResults`,
+    });
   };
 
   return (
     <div className="App">
       <header>
-        <h1>National Park Finder</h1>
+        <Header />
       </header>
       <main>
-        <Selection handleAreaSearch={handleAreaSearch} />
-        <Search handleInput={handleInput} handleClick={searchrequest} />
+        <Route exact path="/">
+          <div className="search-section">
+            <div>
+              <Selection handleAreaSearch={handleAreaSearch} />
+            </div>
+            <div>
+              <Search
+                to="/searchResults"
+                handleInput={handleInput}
+                handleClick={searchrequest}
+              />
+            </div>
+          </div>
 
-        <Results results={state.results} />
+          <div>
+            <img className="main-img" src={coverImg} alt="cover" />
+          </div>
+        </Route>
+        <Route exact path="/searchResults">
+          <Results apiUrl={apiUrl} />
+        </Route>
+        <Route exact path="/parkDetails/:id">
+          <Parkdetails requestUrl={requestUrl} />
+        </Route>
       </main>
     </div>
   );
-}
+};
 
 export default App;

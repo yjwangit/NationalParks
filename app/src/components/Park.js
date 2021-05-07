@@ -9,7 +9,7 @@ function Park({ park }) {
       <img
         className="imgStyle"
         alt={safePark.title}
-        src={safePark.images[0]["url"]}
+        src={safePark.images.length > 0 ? safePark.images[0]["url"] : ""}
       />
       <h3>{safePark.fullName}</h3>
     </div>

@@ -215,14 +215,19 @@ function Selection({ handleAreaSearch }) {
   };
   const selectBlur = (e) => {};
   return (
-    <div>
-      <select onBlur={selectBlur} onChange={selectChange}>
+    <section>
+      <select className="searchbox" onBlur={selectBlur} onChange={selectChange}>
         {area.map((item) => (
           <option value={item.abbreviation}>{item.name}</option>
         ))}
       </select>
-      <button onClick={() => handleAreaSearch(selectedVal)}>search</button>
-    </div>
+      <button
+        className="search-btn"
+        onClick={() => handleAreaSearch(selectedVal)}
+      >
+        search
+      </button>
+    </section>
   );
 }
 

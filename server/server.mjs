@@ -20,8 +20,7 @@ tasks.get("/", async (request, response) => {
 });
 
 tasks.get("/parks", async (request, response) => {
-  // console.log(request);
-
+  //console.log(request);
   const { query } = request;
   console.log("query: ", query);
 

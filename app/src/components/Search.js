@@ -9,7 +9,9 @@ function Search({ handleInput, handleClick }) {
         className="searchbox"
         onChange={handleInput}
       />
-      <button onClick={handleClick}>search</button>
+      <button className="search-btn" onClick={handleClick}>
+        search
+      </button>
     </section>
   );
 }
