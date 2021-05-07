@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Route, useHistory } from "react-router-dom";
 
 import Header from "./components/Header";
-import LoginButton from "./components/Login";
 import LogoutButton from "./components/Logout";
 import Parkdetails from "./components/Parkdetails";
 import Profile from "./components/Profile";
@@ -11,7 +10,7 @@ import Results from "./components/Results";
 import Search from "./components/Search";
 import Selection from "./components/Selection";
 import Signup from "./components/Signup";
-
+import coverImg from "./image/cover.jpg";
 const App = () => {
   let history = useHistory();
   const requestUrl = `http://localhost:4000/api/tasks/parks`;
@@ -51,30 +50,31 @@ const App = () => {
     <div className="App">
       <header>
         <Header />
-        <LoginButton />
       </header>
       <main>
-        <Profile />
-        <LogoutButton />
         <Route exact path="/">
-          <Selection handleAreaSearch={handleAreaSearch} />
-          <Search
-            to="/searchResults"
-            handleInput={handleInput}
-            handleClick={searchrequest}
-          />
+          <div className="search-section">
+            <div>
+              <Selection handleAreaSearch={handleAreaSearch} />
+            </div>
+            <div>
+              <Search
+                to="/searchResults"
+                handleInput={handleInput}
+                handleClick={searchrequest}
+              />
+            </div>
+          </div>
+
+          <div>
+            <img className="main-img" src={coverImg} alt="cover" />
+          </div>
         </Route>
         <Route exact path="/searchResults">
           <Results apiUrl={apiUrl} />
         </Route>
         <Route exact path="/parkDetails/:id">
           <Parkdetails requestUrl={requestUrl} />
-        </Route>
-        <Route exact path="/login">
-          <LoginButton />
-        </Route>
-        <Route exact path="/signup">
-          <Signup />
         </Route>
       </main>
     </div>
