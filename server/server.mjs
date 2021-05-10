@@ -16,6 +16,7 @@ const tasks = express.Router();
 
 tasks.get("/", async (request, response) => {
   const tasks = await db.getTasks();
+  console.log(tasks);
   response.json(tasks);
 });
 
@@ -33,12 +34,11 @@ tasks.get("/parks", async (request, response) => {
   response.json(result.data);
 });
 
-//developer.nps.gov/api/v1/parks?parkCode=&parkCode=&stateCode=&sort=&api_key=DfbkVVqO5eM8F7cPXqbJVfOmFEHtfmBXsuktlP48
-
 tasks.use(express.json());
-tasks.post("/", async (request, response) => {
-  const { name } = request.body;
-  const task = await db.addTask(name);
+tasks.post("/addFavorite", async (request, response) => {
+  const { parkId, parkName, parkCover, userId } = request.body;
+  const params = { parkId, parkName, parkCover, userId };
+  const task = await db.insertUserFavorites(params);
   response.status(201).json(task);
 });
 
