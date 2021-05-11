@@ -15,10 +15,24 @@ export const testSearch = async () => {
   let data = await db.any("SELECT * FROM PARK WHERE PARK_ID IN ('1','2')");
   console.log(data, "testSearch");
 };
-testSearch();
+// testSearch();
 //search usersave parks
-export const getUserFavorites = async (id) =>
-  await db.any(`SELECT * FROM park WHERE USER_ID=${id}`);
+export const getUserFavorites = async (userId) => {
+  const user = await db.any(`SELECT * FROM USERS WHERE USER_ID = '${userId}'`);
+  if (user) {
+    const ids = user[0]["park_ids"].split(",");
+    let strId = "";
+    if (ids.length > 0) {
+      for (let i = 0; i < ids.length; i++) {
+        strId += i == ids.length - 1 ? `'${ids[i]}'` : `'${ids[i]}',`;
+      }
+    }
+    return await db.any(`SELECT * FROM PARK WHERE PARK_ID IN (${strId})`);
+  } else {
+    return [];
+  }
+};
+console.log(getUserFavorites(1234), "user");
 //insert usersave park
 export const insertPark = async (params) => {
   const hasPark = await db.any(

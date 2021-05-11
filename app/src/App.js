@@ -3,13 +3,11 @@ import React, { useState } from "react";
 import { Route, useHistory } from "react-router-dom";
 
 import Header from "./components/Header";
-import LogoutButton from "./components/Logout";
+import MyFavorites from "./components/MyFavorites";
 import Parkdetails from "./components/Parkdetails";
-import Profile from "./components/Profile";
 import Results from "./components/Results";
 import Search from "./components/Search";
 import Selection from "./components/Selection";
-import Signup from "./components/Signup";
 import coverImg from "./image/cover.jpg";
 const App = () => {
   let history = useHistory();
@@ -75,6 +73,9 @@ const App = () => {
         </Route>
         <Route exact path="/parkDetails/:id">
           <Parkdetails requestUrl={requestUrl} />
+        </Route>
+        <Route exact path="/favorite">
+          <MyFavorites />
         </Route>
       </main>
     </div>

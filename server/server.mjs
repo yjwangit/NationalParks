@@ -1,7 +1,7 @@
 import axios from "axios";
 import cors from "cors";
 import dotenv from "dotenv";
-import express from "express";
+import express, { query } from "express";
 import mime from "mime-types";
 
 import * as db from "./db.mjs";
@@ -45,7 +45,11 @@ tasks.post("/addFavorite", async (request, response) => {
     code: 201,
   });
 });
-
+tasks.get("/getUserFavorites", async (request, response) => {
+  const { userId } = request.query;
+  const data = await db.getUserFavorites(userId);
+  response.status(201).json(data);
+});
 app.use("/api/tasks", tasks); //use tasks router, api/tasks is added before /myFavorites
 
 process.env?.SERVE_REACT?.toLowerCase() === "true" &&

@@ -20,6 +20,11 @@ function Park({ park }) {
       parkCover: park.images.length > 0 ? park.images[0].url : "",
       userId: user.sub,
     };
+    axios
+      .post("http://localhost:4000/api/tasks/addFavorite", params)
+      .then((res) => {
+        console.log(res);
+      });
   };
   return (
     <div className="park">
