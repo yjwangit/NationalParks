@@ -38,11 +38,15 @@ tasks.use(express.json());
 tasks.post("/addFavorite", async (request, response) => {
   const { parkId, parkName, parkCover, userId } = request.body;
   const params = { parkId, parkName, parkCover, userId };
-  const task = await db.insertUserFavorites(params);
-  response.status(201).json(task);
+  await db.insertPark(params);
+  await db.insertUser(params);
+  response.status(201).json({
+    message: "success",
+    code: 201,
+  });
 });
 
-app.use("/api/tasks", tasks);
+app.use("/api/tasks", tasks); //use tasks router, api/tasks is added before /myFavorites
 
 process.env?.SERVE_REACT?.toLowerCase() === "true" &&
   app.use(
