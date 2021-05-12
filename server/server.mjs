@@ -48,7 +48,19 @@ tasks.post("/addFavorite", async (request, response) => {
 tasks.get("/getUserFavorites", async (request, response) => {
   const { userId } = request.query;
   const data = await db.getUserFavorites(userId);
-  response.status(201).json(data);
+  response.status(201).json({
+    message: "success",
+    code: 201,
+    data: data,
+  });
+});
+tasks.delete("/delUserFavorite", async (request, response) => {
+  const { userId, parkId } = request.query;
+  await db.delUserFavorite(userId, parkId);
+  response.status(201).json({
+    message: "delete success",
+    code: 201,
+  });
 });
 app.use("/api/tasks", tasks); //use tasks router, api/tasks is added before /myFavorites
 

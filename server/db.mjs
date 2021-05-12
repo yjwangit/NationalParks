@@ -18,10 +18,12 @@ export const testSearch = async () => {
 // testSearch();
 //search usersave parks
 export const getUserFavorites = async (userId) => {
+  console.log(userId);
   const user = await db.any(`SELECT * FROM USERS WHERE USER_ID = '${userId}'`);
   if (user) {
     const ids = user[0]["park_ids"].split(",");
     let strId = "";
+    // [1,2,3,4] => '1','2','3','4'
     if (ids.length > 0) {
       for (let i = 0; i < ids.length; i++) {
         strId += i == ids.length - 1 ? `'${ids[i]}'` : `'${ids[i]}',`;
@@ -32,11 +34,23 @@ export const getUserFavorites = async (userId) => {
     return [];
   }
 };
-console.log(getUserFavorites(1234), "user");
+// console.log(getUserFavorites(1234), "user");
+export const delUserFavorite = async (userId, parkId) => {
+  const user = await db.any(`SELECT * FROM USERS WHERE USER_ID = '${userId}'`);
+  if (user) {
+    let _ids = user[0]["park_ids"].split(",");
+    _ids.splice(_ids.indexOf(parkId), 1);
+    await db.any(
+      `UPDATE USERS  SET PARK_IDS = '${_ids.join(
+        ",",
+      )}' WHERE USER_ID = '${userId}'`,
+    );
+  }
+};
 //insert usersave park
 export const insertPark = async (params) => {
   const hasPark = await db.any(
-    //take out "resolve" in promis; in array format
+    //take out "resolve" in promise; in array format
     `SELECT * FROM PARK WHERE PARK_ID = '${params.parkId}'`,
   );
   if (hasPark.length === 0) {
