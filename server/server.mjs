@@ -1,7 +1,7 @@
 import axios from "axios";
 import cors from "cors";
 import dotenv from "dotenv";
-import express from "express";
+import express, { query } from "express";
 import mime from "mime-types";
 
 import * as db from "./db.mjs";
@@ -16,6 +16,7 @@ const tasks = express.Router();
 
 tasks.get("/", async (request, response) => {
   const tasks = await db.getTasks();
+  console.log(tasks);
   response.json(tasks);
 });
 
@@ -33,16 +34,23 @@ tasks.get("/parks", async (request, response) => {
   response.json(result.data);
 });
 
-//developer.nps.gov/api/v1/parks?parkCode=&parkCode=&stateCode=&sort=&api_key=DfbkVVqO5eM8F7cPXqbJVfOmFEHtfmBXsuktlP48
-
 tasks.use(express.json());
-tasks.post("/", async (request, response) => {
-  const { name } = request.body;
-  const task = await db.addTask(name);
-  response.status(201).json(task);
+tasks.post("/addFavorite", async (request, response) => {
+  const { parkId, parkName, parkCover, userId } = request.body;
+  const params = { parkId, parkName, parkCover, userId };
+  await db.insertPark(params);
+  await db.insertUser(params);
+  response.status(201).json({
+    message: "success",
+    code: 201,
+  });
 });
-
-app.use("/api/tasks", tasks);
+tasks.get("/getUserFavorites", async (request, response) => {
+  const { userId } = request.query;
+  const data = await db.getUserFavorites(userId);
+  response.status(201).json(data);
+});
+app.use("/api/tasks", tasks); //use tasks router, api/tasks is added before /myFavorites
 
 process.env?.SERVE_REACT?.toLowerCase() === "true" &&
   app.use(
