@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
 
 import Park from "./Park";
 /**
@@ -10,10 +10,14 @@ import Park from "./Park";
       ))}
  */
 function Results({ apiUrl }) {
+  const { user, isAuthenticated } = useAuth0();
   const [results, setResults] = useState([]);
-  let history = useHistory(); //The useHistory hook gives you access to the history instance that you may use to navigate.
+  const [savedIds, setSavedIds] = useState([]);
   useEffect(() => {
-    queryList(apiUrl); //通过上级组件传来的props中的apiurl进行请求
+    queryList(apiUrl);
+    if (isAuthenticated) {
+      getUserAllfavorites();
+    }
   }, []);
   const queryList = (url) => {
     axios.get(url).then((data) => {
@@ -22,16 +26,28 @@ function Results({ apiUrl }) {
       setResults(data.data.data);
     });
   };
-  const clickDetail = (id) => {
-    //跳转详情页,拼接路由动态参数
-    history.push({ pathname: `/parkDetails/${id}` });
+
+  const getUserAllfavorites = (id) => {
+    //to query user's saved parks
+    axios
+      .get(
+        `http://localhost:4000/api/tasks/getUserFavorites?userId=${user.sub}`,
+      )
+      .then((res) => {
+        setSavedIds(res.data.data.map((item) => item.park_id)); //update savedIds
+      });
   };
+
   return (
     <div className="results">
       {results.map((park) => (
         //添加点击事件并传入pardid作为参数
-        <div onClick={() => clickDetail(park.id)} aria-hidden="true">
-          <Park park={park} />
+        <div aria-hidden="true" className="park">
+          <Park
+            park={park}
+            savedIds={savedIds}
+            getUserAllfavorites={getUserAllfavorites}
+          />
         </div>
       ))}
     </div>

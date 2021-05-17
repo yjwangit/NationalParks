@@ -19,7 +19,7 @@ const App = () => {
   const [apiUrl, setApiUrl] = useState("");
 
   const searchrequest = (e) => {
-    setApiUrl(`${requestUrl}?q=${state.searchValue}&limit=10`);
+    setApiUrl(`${requestUrl}?q=${state.searchValue}`);
     history.push({
       pathname: `/searchResults`,
     });
@@ -64,9 +64,7 @@ const App = () => {
             </div>
           </div>
 
-          <div>
-            <img className="main-img" src={coverImg} alt="cover" />
-          </div>
+          <div></div>
         </Route>
         <Route exact path="/searchResults">
           <Results apiUrl={apiUrl} />

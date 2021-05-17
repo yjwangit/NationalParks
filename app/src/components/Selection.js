@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 
 //handleAreaSearch是在props中传递过来的函数，此函数在app.js中定义,需要传入statecode参数在app.js中进行接口的请求
+
 function Selection({ handleAreaSearch }) {
-  const [selectedVal, setSelectedVal] = useState("");
+  const [selectedVal, setSelectedVal] = useState("AL");
   const [area] = useState([
     {
       name: "Alabama",

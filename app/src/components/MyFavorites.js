@@ -16,7 +16,7 @@ const MyFavorites = () => {
   const getUserFavorites = () => {
     axios
       .get(
-        `http://localhost:4000/api/tasks/getUserFavorites?userId=${user.sub}`,
+        `http://localhost:4000/api/tasks/getUserFavorites?userId=${user.sub}`, //getUserFavorites接口
       )
       .then((res) => {
         console.log(res, "userData");

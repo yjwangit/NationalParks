@@ -3,10 +3,12 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+/* background-image: url("./image/cover.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%; */
 body {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  background-color: darkkhaki;
+  background-color: rgb(224, 223, 203);
 }
 header h1 {
   color: darkslategray;
@@ -17,6 +19,7 @@ header h1 {
 main {
   max-width: 960px;
   margin: 0 auto;
+  height: 100vh;
 }
 
 main button {
@@ -60,8 +63,35 @@ section {
 }
 .results {
   display: flex;
+  flex-flow: wrap;
+  width: 100%;
+}
+.park {
+  width: 33.33%;
+  padding: 0px 10px;
+  box-sizing: border-box;
+  display: block;
+  margin-top: 10px;
+}
+.park-img {
+  height: 200px;
+  object-fit: cover;
+}
+.park-title {
+  height: 45px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.park-handle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
+.park-handle img {
+  height: 25px;
+  width: 30px;
+}
 /* details */
 .details-container {
   border: 1px solid #efefef;

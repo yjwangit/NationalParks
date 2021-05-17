@@ -1,10 +1,10 @@
 import axios from "axios";
 import cors from "cors";
 import dotenv from "dotenv";
-import express, { query } from "express";
+import express from "express";
 import mime from "mime-types";
 
-import * as db from "./db.mjs";
+import * as db from "./db.mjs"; //all exported functions from db.mjs
 
 dotenv.config();
 
@@ -23,13 +23,13 @@ tasks.get("/", async (request, response) => {
 tasks.get("/parks", async (request, response) => {
   //console.log(request);
   const { query } = request;
-  console.log("query: ", query);
+  //console.log("query: ", query);
 
   const url = `https://developer.nps.gov/api/v1/parks?api_key=${process.env.NPS_API_KEY}`;
-  console.log("XXX tasks:/partks: url:", url);
+  //console.log("XX tasks:/partks: url:", url);
 
-  const result = await axios.get(url, { params: query });
-  console.log("XXX tasks:/partks: result:", result);
+  const result = await axios.get(url, { params: query }); //axios returns promise, await is for the resolve in promise, then execute next commands
+  //console.log("XXX tasks:/partks: result:", result);
 
   response.json(result.data);
 });
@@ -54,8 +54,9 @@ tasks.get("/getUserFavorites", async (request, response) => {
     data: data,
   });
 });
+
 tasks.delete("/delUserFavorite", async (request, response) => {
-  const { userId, parkId } = request.query;
+  const { userId, parkId } = request.query; //"delusefavorites"是delete的接口地址
   await db.delUserFavorite(userId, parkId);
   response.status(201).json({
     message: "delete success",

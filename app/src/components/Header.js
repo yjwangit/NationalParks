@@ -5,15 +5,14 @@ import LoginButton from "./Login";
 import LogoutButton from "./Logout";
 const Header = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
+  // <h3>National Park Finder</h3>
   return (
     <div className="header">
       <div>
-        <Link to="/">Home</Link>
-        <Link to="/favorite">MyFavorite</Link>
+        <Link to="/">Home</Link>&nbsp;&nbsp;
+        <Link to="/favorite">My Saved Parks</Link>
       </div>
-      <div>
-        <h3>National Park Finder</h3>
-      </div>
+      <div></div>
       <div>
         {isAuthenticated ? (
           <span>
