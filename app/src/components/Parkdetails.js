@@ -34,7 +34,7 @@ function Popup({ requestUrl }) {
         <div className="details-info">
           <h3>{details.fullName}</h3>
           <h5>{details.states}</h5>
-          <div>{details.description}</div>
+          <div className="details-desc">{details.description}</div>
           <div className="details-coveritems">
             {isLoad
               ? details.images.map((detail, index) =>

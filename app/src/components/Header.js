@@ -9,15 +9,22 @@ const Header = () => {
   return (
     <div className="header">
       <div>
-        <Link to="/">Home</Link>&nbsp;&nbsp;
-        <Link to="/favorite">My Saved Parks</Link>
+        <Link className="white" to="/">
+          Home
+        </Link>
+        &nbsp;&nbsp;
+        {isAuthenticated ? (
+          <Link className="white" to="/favorite">
+            My Saved Parks
+          </Link>
+        ) : null}
       </div>
       <div></div>
       <div>
         {isAuthenticated ? (
           <span>
             <img className="user-img" src={user.picture} alt="" />
-            <span className="user-name">{user.email}</span>
+            <span className="user-name white">{user.email}</span>
             <LogoutButton />
           </span>
         ) : (

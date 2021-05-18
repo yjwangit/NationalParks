@@ -37,6 +37,25 @@ function Park({ park, savedIds, getUserAllfavorites }) {
         }
       });
   };
+  const delFavorite = (e) => {
+    e.stopPropagation();
+    // parkId, parkName, parkCover, userId;
+    const params = {
+      parkId: park.id,
+      userId: user.sub,
+    };
+    axios
+      .delete(
+        `http://localhost:4000/api/tasks/delUserFavorite?userId=${params.userId}&parkId=${params.parkId}`,
+      )
+      .then((res) => {
+        console.log(res);
+        //saved success
+        if (res.data.code === 201) {
+          getUserAllfavorites();
+        }
+      });
+  };
   const clickDetail = (id) => {
     //navigate to the park details page 跳转详情页,拼接路由动态参数
     history.push({ pathname: `/parkDetails/${id}` });
@@ -56,7 +75,13 @@ function Park({ park, savedIds, getUserAllfavorites }) {
             <Button variant="warning" onClick={() => clickDetail(safePark.id)}>
               Info
             </Button>
-            <div role="button" onMouseDown={addFavorite} tabIndex={0}>
+            <div
+              role="button"
+              onMouseDown={
+                savedIds.indexOf(safePark.id) === -1 ? addFavorite : delFavorite
+              }
+              tabIndex={0}
+            >
               <img
                 src={savedIds.indexOf(safePark.id) > -1 ? LikeImg : UnLikeImg}
                 alt=""

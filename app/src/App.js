@@ -52,19 +52,19 @@ const App = () => {
       <main>
         <Route exact path="/">
           <div className="search-section">
-            <div>
-              <Selection handleAreaSearch={handleAreaSearch} />
-            </div>
-            <div>
-              <Search
-                to="/searchResults"
-                handleInput={handleInput}
-                handleClick={searchrequest}
-              />
+            <div className="search-container">
+              <div className="search-state">
+                <Selection handleAreaSearch={handleAreaSearch} />
+              </div>
+              <div className="search-keywords">
+                <Search
+                  to="/searchResults"
+                  handleInput={handleInput}
+                  handleClick={searchrequest}
+                />
+              </div>
             </div>
           </div>
-
-          <div></div>
         </Route>
         <Route exact path="/searchResults">
           <Results apiUrl={apiUrl} />

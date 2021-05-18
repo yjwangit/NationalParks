@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
+import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
 const MyFavorites = () => {
   const { user, isAuthenticated, loginWithRedirect } = useAuth0();
   const [favorites, setFavorites] = useState([]);
@@ -40,18 +42,24 @@ const MyFavorites = () => {
     <div className="favorites-list">
       {favorites.map((fav) => {
         return (
-          <div className="favorites-item">
-            <div className="favorites-img">
-              <img src={fav.park_cover} alt={fav.park_name} />
-              <div className="favorites-name">{fav.park_name}</div>
-            </div>
+          <Alert variant="warning">
+            <div className="favorites-item">
+              <div className="favorites-img">
+                <img src={fav.park_cover} alt={fav.park_name} />
+                <div className="favorites-name">
+                  <Link to={`/parkDetails/${fav.park_id}`}>
+                    {fav.park_name}
+                  </Link>
+                </div>
+              </div>
 
-            <div className="favorites-handle">
-              <Button variant="light" onClick={() => delFavorite(fav)}>
-                Delete
-              </Button>
+              <div className="favorites-handle">
+                <Button variant="light" onClick={() => delFavorite(fav)}>
+                  Delete
+                </Button>
+              </div>
             </div>
-          </div>
+          </Alert>
         );
       })}
     </div>
