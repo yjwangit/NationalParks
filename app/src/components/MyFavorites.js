@@ -6,7 +6,13 @@ import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 const MyFavorites = () => {
-  const { user, isAuthenticated, loginWithRedirect } = useAuth0();
+  const {
+    user,
+    isAuthenticated,
+    loginWithRedirect,
+    getAccessTokenSilently,
+  } = useAuth0();
+
   const [favorites, setFavorites] = useState([]);
   useEffect(() => {
     if (!isAuthenticated) {
@@ -15,6 +21,7 @@ const MyFavorites = () => {
     }
     getUserFavorites();
   }, []);
+
   const getUserFavorites = () => {
     axios
       .get(
@@ -25,6 +32,7 @@ const MyFavorites = () => {
         setFavorites(res.data.data);
       });
   };
+
   const delFavorite = (fav) => {
     console.log(fav);
     axios
