@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
 import { Route, useHistory } from "react-router-dom";
 
 import Header from "./components/Header";
@@ -8,7 +11,8 @@ import Parkdetails from "./components/Parkdetails";
 import Results from "./components/Results";
 import Search from "./components/Search";
 import Selection from "./components/Selection";
-import coverImg from "./image/cover.jpg";
+import title from "./image/title.png";
+
 const App = () => {
   let history = useHistory();
   const requestUrl = `http://localhost:4000/api/tasks/parks`;
@@ -50,21 +54,24 @@ const App = () => {
         <Header />
       </header>
       <main>
+        <div className="title">
+          <img src={title} alt="title" />
+        </div>
         <Route exact path="/">
-          <div className="search-section">
-            <div className="search-container">
-              <div className="search-state">
+          <Container className="search-section">
+            <Row xs={1} md={2} lg={2}>
+              <Col>
                 <Selection handleAreaSearch={handleAreaSearch} />
-              </div>
-              <div className="search-keywords">
+              </Col>
+              <Col>
                 <Search
                   to="/searchResults"
                   handleInput={handleInput}
                   handleClick={searchrequest}
                 />
-              </div>
-            </div>
-          </div>
+              </Col>
+            </Row>
+          </Container>
         </Route>
         <Route exact path="/searchResults">
           <Results apiUrl={apiUrl} />
@@ -81,3 +88,21 @@ const App = () => {
 };
 
 export default App;
+// <div className="container">
+//   <div className="row">
+//     <div className="col-sm">
+//       <div className="search-state">
+//         <Selection handleAreaSearch={handleAreaSearch} />
+//       </div>
+//     </div>
+//     <div class="col-sm">
+//       <div className="search-keywords">
+//         <Search
+//           to="/searchResults"
+//           handleInput={handleInput}
+//           handleClick={searchrequest}
+//         />
+//       </div>
+//     </div>
+//   </div>
+// </div>;

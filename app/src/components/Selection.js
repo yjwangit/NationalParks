@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import Button from "react-bootstrap/Button";
-
+import InputGroup from "react-bootstrap/InputGroup";
 //handleAreaSearch是在props中传递过来的函数，此函数在app.js中定义,需要传入statecode参数在app.js中进行接口的请求
 
 function Selection({ handleAreaSearch }) {
@@ -218,7 +218,7 @@ function Selection({ handleAreaSearch }) {
   };
   const selectBlur = (e) => {};
   return (
-    <section className="search-row">
+    <InputGroup className="mb-3">
       <select
         className=" form-control"
         onBlur={selectBlur}
@@ -228,14 +228,12 @@ function Selection({ handleAreaSearch }) {
           <option value={item.abbreviation}>{item.name}</option>
         ))}
       </select>
-      <Button
-        className="search-btn"
-        variant="light"
-        onClick={() => handleAreaSearch(selectedVal)}
-      >
-        search
-      </Button>
-    </section>
+      <InputGroup.Append>
+        <Button variant="light" onClick={() => handleAreaSearch(selectedVal)}>
+          Search
+        </Button>
+      </InputGroup.Append>
+    </InputGroup>
   );
 }
 

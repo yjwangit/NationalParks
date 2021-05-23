@@ -63,7 +63,7 @@ const MyFavorites = () => {
 
               <div className="favorites-handle">
                 <Button variant="light" onClick={() => delFavorite(fav)}>
-                  Delete
+                  Unfollow
                 </Button>
               </div>
             </div>

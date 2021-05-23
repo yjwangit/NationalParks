@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 import Park from "./Park";
+import Popup from "./Popup";
 /**
  *{results.map((park) => (
         <Park park={park} />
@@ -13,6 +16,7 @@ function Results({ apiUrl }) {
   const { user, isAuthenticated } = useAuth0();
   const [results, setResults] = useState([]);
   const [savedIds, setSavedIds] = useState([]);
+  const [show, setShow] = useState(false);
   useEffect(() => {
     queryList(apiUrl);
     if (isAuthenticated) {
@@ -34,22 +38,34 @@ function Results({ apiUrl }) {
         `http://localhost:4000/api/tasks/getUserFavorites?userId=${user.sub}`,
       )
       .then((res) => {
+        console.log(res);
         setSavedIds(res.data.data.map((item) => item.park_id)); //update savedIds
       });
   };
-
+  const closePopup = () => {
+    setShow(false);
+  };
+  const openPopup = () => {
+    setShow(true);
+  };
   return (
     <div className="results">
-      {results.map((park) => (
-        //添加点击事件并传入pardid作为参数
-        <div aria-hidden="true" className="park">
-          <Park
-            park={park}
-            savedIds={savedIds}
-            getUserAllfavorites={getUserAllfavorites}
-          />
-        </div>
-      ))}
+      <Row xs={1} md={2} lg={4}>
+        {results.map((park) => (
+          //添加点击事件并传入pardid作为参数
+          <Col>
+            <div aria-hidden="true" className="park">
+              <Park
+                park={park}
+                savedIds={savedIds}
+                getUserAllfavorites={getUserAllfavorites}
+                openPopup={openPopup}
+              />
+            </div>
+          </Col>
+        ))}
+      </Row>
+      <Popup show={show} closePopup={closePopup}></Popup>
     </div>
   );
 }

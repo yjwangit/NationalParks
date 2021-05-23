@@ -20,6 +20,10 @@ export const testSearch = async () => {
 export const getUserFavorites = async (userId) => {
   console.log(userId);
   const user = await db.any(`SELECT * FROM USERS WHERE USER_ID = '${userId}'`);
+  console.log(user, "user");
+  if (user.length == 0) {
+    return [];
+  }
   if (user) {
     const ids = user[0]["park_ids"].split(",");
     let strId = "";
@@ -30,14 +34,12 @@ export const getUserFavorites = async (userId) => {
       }
     }
     return await db.any(`SELECT * FROM PARK WHERE PARK_ID IN (${strId})`);
-  } else {
-    return [];
   }
 };
 // console.log(getUserFavorites(1234), "user");
 export const delUserFavorite = async (userId, parkId) => {
   const user = await db.any(`SELECT * FROM USERS WHERE USER_ID = '${userId}'`); //db.any returns a promise, await is for resolve in the promise
-  if (user) {
+  if (user.length > 0) {
     let _ids = user[0]["park_ids"].split(","); //turn parkID string into a parkID array
     _ids.splice(_ids.indexOf(parkId), 1);
     await db.any(

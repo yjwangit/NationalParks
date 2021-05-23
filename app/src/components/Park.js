@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
@@ -8,16 +8,17 @@ import { useHistory } from "react-router-dom";
 
 import LikeImg from "../image/liked.png";
 import UnLikeImg from "../image/unliked.png";
-function Park({ park, savedIds, getUserAllfavorites }) {
+function Park({ park, savedIds, getUserAllfavorites, openPopup }) {
   const { user, isAuthenticated } = useAuth0();
   let history = useHistory(); //The useHistory hook gives you access to the history instance that you may use to navigate.
   // <img src={park.images[0] || ""} />;
   // console.log(park, user);
   const safePark = park || {};
+
   const addFavorite = (e) => {
     e.stopPropagation();
     if (!isAuthenticated) {
-      alert("please login");
+      openPopup();
       return;
     }
     // parkId, parkName, parkCover, userId;
@@ -72,7 +73,7 @@ function Park({ park, savedIds, getUserAllfavorites }) {
           <Card.Title className="park-title">{safePark.fullName}</Card.Title>
 
           <div className="park-handle">
-            <Button variant="warning" onClick={() => clickDetail(safePark.id)}>
+            <Button variant="success" onClick={() => clickDetail(safePark.id)}>
               Info
             </Button>
             <div
@@ -83,7 +84,10 @@ function Park({ park, savedIds, getUserAllfavorites }) {
               tabIndex={0}
             >
               <img
-                src={savedIds.indexOf(safePark.id) > -1 ? LikeImg : UnLikeImg}
+                src={
+                  //在用户已保存的id中查找当前的id存不存在,存在显示likeImg不存在显示UnLikeImg
+                  savedIds.indexOf(safePark.id) > -1 ? LikeImg : UnLikeImg
+                }
                 alt=""
               />
             </div>
