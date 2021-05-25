@@ -16,16 +16,16 @@ const MyFavorites = () => {
   const [favorites, setFavorites] = useState([]);
   useEffect(() => {
     if (!isAuthenticated) {
-      loginWithRedirect();
+      // loginWithRedirect();
       return;
     }
     getUserFavorites();
-  }, []);
+  }, [isAuthenticated]);
 
   const getUserFavorites = () => {
     axios
       .get(
-        `http://localhost:4000/api/tasks/getUserFavorites?userId=${user.sub}`, //getUserFavorites接口
+        `http://localhost:4000/api/tasks/getUserFavorites?userId=${user.sub}`, //connect to getUserFavorites port
       )
       .then((res) => {
         console.log(res, "userData");

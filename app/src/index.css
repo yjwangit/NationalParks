@@ -28,6 +28,9 @@ header {
   position: fixed;
   z-index: 999;
 }
+.mr-l {
+  margin-left: 10px;
+}
 .title {
   max-width: 1200px;
   position: absolute;

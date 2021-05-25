@@ -88,21 +88,3 @@ const App = () => {
 };
 
 export default App;
-// <div className="container">
-//   <div className="row">
-//     <div className="col-sm">
-//       <div className="search-state">
-//         <Selection handleAreaSearch={handleAreaSearch} />
-//       </div>
-//     </div>
-//     <div class="col-sm">
-//       <div className="search-keywords">
-//         <Search
-//           to="/searchResults"
-//           handleInput={handleInput}
-//           handleClick={searchrequest}
-//         />
-//       </div>
-//     </div>
-//   </div>
-// </div>;

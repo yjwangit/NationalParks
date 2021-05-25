@@ -42,14 +42,13 @@ const Header = () => {
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="/" className="white">
+          <Link to="/" className="white">
             Home
-          </Nav.Link>
-
+          </Link>
           {isAuthenticated ? (
-            <Nav.Link href="/favorite" className="white">
+            <Link className="white mr-l" to="/favorite">
               My saved Parks
-            </Nav.Link>
+            </Link>
           ) : null}
         </Nav>
         <Nav>
