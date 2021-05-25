@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
 import { Route, useHistory } from "react-router-dom";
 
 import Header from "./components/Header";
@@ -8,7 +11,8 @@ import Parkdetails from "./components/Parkdetails";
 import Results from "./components/Results";
 import Search from "./components/Search";
 import Selection from "./components/Selection";
-import coverImg from "./image/cover.jpg";
+import title from "./image/title.png";
+
 const App = () => {
   let history = useHistory();
   const requestUrl = `http://localhost:4000/api/tasks/parks`;
@@ -19,7 +23,7 @@ const App = () => {
   const [apiUrl, setApiUrl] = useState("");
 
   const searchrequest = (e) => {
-    setApiUrl(`${requestUrl}?q=${state.searchValue}&limit=10`);
+    setApiUrl(`${requestUrl}?q=${state.searchValue}`);
     history.push({
       pathname: `/searchResults`,
     });
@@ -50,23 +54,24 @@ const App = () => {
         <Header />
       </header>
       <main>
+        <div className="title">
+          <img src={title} alt="title" />
+        </div>
         <Route exact path="/">
-          <div className="search-section">
-            <div>
-              <Selection handleAreaSearch={handleAreaSearch} />
-            </div>
-            <div>
-              <Search
-                to="/searchResults"
-                handleInput={handleInput}
-                handleClick={searchrequest}
-              />
-            </div>
-          </div>
-
-          <div>
-            <img className="main-img" src={coverImg} alt="cover" />
-          </div>
+          <Container className="search-section">
+            <Row xs={1} md={2} lg={2}>
+              <Col>
+                <Selection handleAreaSearch={handleAreaSearch} />
+              </Col>
+              <Col>
+                <Search
+                  to="/searchResults"
+                  handleInput={handleInput}
+                  handleClick={searchrequest}
+                />
+              </Col>
+            </Row>
+          </Container>
         </Route>
         <Route exact path="/searchResults">
           <Results apiUrl={apiUrl} />

@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 
+import Button from "react-bootstrap/Button";
+import InputGroup from "react-bootstrap/InputGroup";
 //handleAreaSearch是在props中传递过来的函数，此函数在app.js中定义,需要传入statecode参数在app.js中进行接口的请求
+
 function Selection({ handleAreaSearch }) {
-  const [selectedVal, setSelectedVal] = useState("");
+  const [selectedVal, setSelectedVal] = useState("AL");
   const [area] = useState([
     {
       name: "Alabama",
@@ -215,19 +218,22 @@ function Selection({ handleAreaSearch }) {
   };
   const selectBlur = (e) => {};
   return (
-    <section>
-      <select className="searchbox" onBlur={selectBlur} onChange={selectChange}>
+    <InputGroup className="mb-3">
+      <select
+        className=" form-control"
+        onBlur={selectBlur}
+        onChange={selectChange}
+      >
         {area.map((item) => (
           <option value={item.abbreviation}>{item.name}</option>
         ))}
       </select>
-      <button
-        className="search-btn"
-        onClick={() => handleAreaSearch(selectedVal)}
-      >
-        search
-      </button>
-    </section>
+      <InputGroup.Append>
+        <Button variant="light" onClick={() => handleAreaSearch(selectedVal)}>
+          Search
+        </Button>
+      </InputGroup.Append>
+    </InputGroup>
   );
 }
 

@@ -3,52 +3,88 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+/* background-image: url("./image/cover.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%; */
 body {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  background-color: darkkhaki;
-}
-header h1 {
-  color: darkslategray;
-  font-weight: 500;
-  text-align: center;
+  background-color: rgb(224, 223, 203);
+  background-image: url("./image/coverpage.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
-main {
-  max-width: 960px;
+/* .title {
+  color: #fffbe1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
+
+header {
+  width: 100%;
+  top: 0;
+  position: fixed;
+  z-index: 999;
+}
+.mr-l {
+  margin-left: 10px;
+}
+.title {
+  max-width: 1200px;
+  position: absolute;
+  top: 30%;
+}
+.title img {
+  width: 60%;
+  display: block;
   margin: 0 auto;
+  transition: all ease 2s;
+}
+@media screen and (max-width: 750px) {
+  .title img {
+    width: 90%;
+  }
+}
+.header-font {
+  font-size: 2.5vh;
+}
+.white {
+  color: #fff !important;
+}
+main {
+  padding-top: 50px;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100vh;
+  position: relative;
 }
 
 main button {
 }
 
-section {
-  padding: 15px 0px;
-}
-
-.searchbox {
-  width: 200px;
-  padding: 5px;
-
-  border: none;
-  outline: none;
-  background: none;
-
-  background-color: lightgrey;
-  border-radius: 8px;
-
-  font-size: medium;
-}
-.search-btn {
-  padding: 5px;
-}
 .search-section {
+  position: absolute;
+  max-width: 1200px;
+  top: 55vh;
+}
+.search-row {
+  display: flex;
+}
+.search-container {
+  /*width: 1200px;*/
   display: flex;
   justify-content: space-between;
-  justify-items: center;
+  align-items: center;
+}
+
+.dropdown-menu .show {
+  height: 180px;
+  overflow: auto;
 }
 .selection-padding {
-  padding: 15px;
+  /*padding: 15px;*/
 }
 .imgStyle {
   width: 200px;
@@ -59,41 +95,74 @@ section {
   margin: 0 auto;
 }
 .results {
+  background-color: #fff;
   display: flex;
+  border-radius: 10px;
+  flex-flow: wrap;
+  width: 100%;
+  overflow: auto;
+  height: calc(100vh - 60px);
+}
+.park {
+  padding: 0px 10px;
+  box-sizing: border-box;
+  display: block;
+  margin-top: 10px;
+}
+.park-img {
+  height: 200px;
+  object-fit: cover;
+}
+.park-title {
+  height: 45px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.park-handle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
+.park-handle img {
+  height: 25px;
+  width: 30px;
+}
 /* details */
 .details-container {
-  border: 1px solid #efefef;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  background-color: #fff;
+  padding: 10px;
 }
-.details-img {
-  width: 350px;
-  height: 350px;
-  background: #fff;
+.details-container .row {
+  margin: 0;
+
+  align-items: center;
 }
 .details-img img {
   width: 100%;
-  height: 100%;
+  max-height: 300px;
   object-fit: contain;
 }
-.details-info {
-  width: 550px;
+
+.details-desc {
+  padding: 10px 0px;
 }
 .details-coveritems {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 .details-info .details-coverimg {
-  width: 120px;
-  height: 120px;
+  cursor: pointer;
+  width: 25%;
+  padding: 5px;
 }
-
+.details-info h3 {
+  margin-top: 10px;
+}
 .header {
   padding: 0 20px;
   height: 50px;
+  width: 100%;
   line-height: 50px;
   display: flex;
   justify-content: space-between;
@@ -112,4 +181,41 @@ section {
 }
 .main-img {
   width: 100%;
+}
+
+/* favorites */
+.favorites-list {
+  height: calc(100vh - 60px);
+  overflow: auto;
+  background-color: #fffbe1;
+  border-radius: 10px;
+  padding: 5px;
+}
+.favorites-item {
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  justify-content: space-between;
+  justify-items: center;
+  margin-bottom: 5px;
+}
+.favorites-img {
+  display: flex;
+  align-items: center;
+}
+.favorites-name {
+  margin-left: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+.favorites-img img {
+  border-radius: 4px;
+  overflow: hidden;
+  width: 80px;
+  height: 60px;
+  object-fit: cover;
+}
+
+.back-btn {
+  margin: 10px;
 }
