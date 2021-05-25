@@ -42,7 +42,7 @@ const App = () => {
 
   const handleAreaSearch = (statecode) => {
     //search by satecode
-    setApiUrl(`${requestUrl}?statecode=${statecode}&limit=10`);
+    setApiUrl(`${requestUrl}?statecode=${statecode}`);
     history.push({
       pathname: `/searchResults`,
     });
