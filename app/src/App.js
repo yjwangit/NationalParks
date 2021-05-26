@@ -15,7 +15,7 @@ import title from "./image/title.png";
 
 const App = () => {
   let history = useHistory();
-  const requestUrl = `http://localhost:4000/api/tasks/parks`;
+  const requestUrl = `https://nationalparks2021.herokuapp.com/api/tasks/parks`;
   const [state, setState] = useState({
     searchValue: "",
     results: [],

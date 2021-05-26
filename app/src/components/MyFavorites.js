@@ -25,7 +25,7 @@ const MyFavorites = () => {
   const getUserFavorites = () => {
     axios
       .get(
-        `http://localhost:4000/api/tasks/getUserFavorites?userId=${user.sub}`, //connect to getUserFavorites port
+        `/api/tasks/getUserFavorites?userId=${user.sub}`, //connect to getUserFavorites port
       )
       .then((res) => {
         console.log(res, "userData");
@@ -37,7 +37,7 @@ const MyFavorites = () => {
     console.log(fav);
     axios
       .delete(
-        `http://localhost:4000/api/tasks/delUserFavorite?userId=${user.sub}&parkId=${fav.park_id}`,
+        `/api/tasks/delUserFavorite?userId=${user.sub}&parkId=${fav.park_id}`,
       )
       .then((res) => {
         console.log(res);

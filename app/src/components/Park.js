@@ -28,15 +28,13 @@ function Park({ park, savedIds, getUserAllfavorites, openPopup }) {
       parkCover: park.images.length > 0 ? park.images[0].url : "",
       userId: user.sub,
     };
-    axios
-      .post("http://localhost:4000/api/tasks/addFavorite", params)
-      .then((res) => {
-        console.log(res);
-        //saved success
-        if (res.data.code === 201) {
-          getUserAllfavorites();
-        }
-      });
+    axios.post("/api/tasks/addFavorite", params).then((res) => {
+      console.log(res);
+      //saved success
+      if (res.data.code === 201) {
+        getUserAllfavorites();
+      }
+    });
   };
   const delFavorite = (e) => {
     e.stopPropagation();
@@ -47,7 +45,7 @@ function Park({ park, savedIds, getUserAllfavorites, openPopup }) {
     };
     axios
       .delete(
-        `http://localhost:4000/api/tasks/delUserFavorite?userId=${params.userId}&parkId=${params.parkId}`,
+        `/api/tasks/delUserFavorite?userId=${params.userId}&parkId=${params.parkId}`,
       )
       .then((res) => {
         console.log(res);

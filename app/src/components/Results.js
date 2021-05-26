@@ -33,14 +33,10 @@ function Results({ apiUrl }) {
 
   const getUserAllfavorites = (id) => {
     //to query user's saved parks
-    axios
-      .get(
-        `http://localhost:4000/api/tasks/getUserFavorites?userId=${user.sub}`,
-      )
-      .then((res) => {
-        console.log(res);
-        setSavedIds(res.data.data.map((item) => item.park_id)); //update savedIds
-      });
+    axios.get(`/api/tasks/getUserFavorites?userId=${user.sub}`).then((res) => {
+      console.log(res);
+      setSavedIds(res.data.data.map((item) => item.park_id)); //update savedIds
+    });
   };
   const closePopup = () => {
     setShow(false);
