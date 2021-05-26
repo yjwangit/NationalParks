@@ -98,23 +98,19 @@ function initDb() {
   let connection;
   dotenv.config({ path: "../.env" });
   console.log(process.env.DATABASE_URL, "url");
-  // if (process.env.DATABASE_URL === undefined) {
-  //   connection = {
-  //     user: "postgres",
-  //     database: process.env.POSTGRES_DB,
-  //     password: process.env.POSTGRES_PASSWORD,
-  //     port: 5442,
-  //   };
-  // } else {
-  //   connection = {
-  //     connectionString: process.env.DATABASE_URL,
-  //     ssl: { rejectUnauthorized: false },
-  //   };
-  // }
-  connection = {
-    connectionString: `postgres://bdbtzejcuvkrmr:a40eb685c79a31584769c04ce6c0c57ae285901a2ae6e9c9a407b16678c0e784@ec2-34-233-0-64.compute-1.amazonaws.com:5432/d667mk0ucga6fr`,
-    ssl: { rejectUnauthorized: false },
-  };
+  if (process.env.DATABASE_URL === undefined) {
+    connection = {
+      user: "postgres",
+      database: process.env.POSTGRES_DB,
+      password: process.env.POSTGRES_PASSWORD,
+      port: 5442,
+    };
+  } else {
+    connection = {
+      connectionString: process.env.DATABASE_URL,
+      ssl: { rejectUnauthorized: false },
+    };
+  }
   console.log(connection);
   return pgp()(connection);
 }
