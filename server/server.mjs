@@ -15,9 +15,9 @@ app.use(cors());
 const tasks = express.Router();
 
 tasks.get("/", async (request, response) => {
-  //const tasks = await db.getTasks();
+  const tasks = await db.getTasks();
   // console.log(tasks);
-  response.json({ test: "123" });
+  response.json(tasks);
 });
 
 tasks.get("/parks", async (request, response) => {
